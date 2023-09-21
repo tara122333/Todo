@@ -6,11 +6,12 @@ require("./database/connection");
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import passport from 'passport';
-const session = require('express-session')
+// import passport from 'passport';
+// const session = require('express-session')
 
 // imports my modules
-
+import auth from './router/authRouter';
+import user from './router/userRouter';
 // import configs
 // import googleAuthConfig from "./config/google.config"; // google AuthConfig
 // import routeConfig from './config/route.config';
@@ -27,12 +28,11 @@ const session = require('express-session')
 const App = express();
 
 
-
-App.use(session({
-    resave: false,
-    saveUninitialized: true,
-    secret: 'bla bla bla'
-}));
+// App.use(session({
+//     resave: false,
+//     saveUninitialized: true,
+//     secret: 'bla bla bla'
+// }));
 
 
 
@@ -41,8 +41,8 @@ App.use(express.json());
 App.use(express.urlencoded({ extended: false }));
 App.use(helmet());
 App.use(cors());
-App.use(passport.initialize());
-App.use(passport.session());
+// App.use(passport.initialize());
+// App.use(passport.session());
 
 
 
@@ -52,11 +52,11 @@ App.use(passport.session());
 
 
 // Application Route
-// Zomato.use('/auth', Auth);
-
+App.use('/auth', auth);
+App.use('/user', user);
 
 App.get("/", (req, res) => {
-    res.json({ message: "Success" });
+    res.status(200).json({ message: "Success" });
 });
 
 
