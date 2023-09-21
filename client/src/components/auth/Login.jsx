@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from 'axios'
 
@@ -14,6 +14,26 @@ const Login = () => {
 
     const navigate = useNavigate();
 
+    const getUserData = async () => {
+        try {
+            const _id = localStorage.getItem("_id");
+            const response = await axios.get(`http://localhost:4000/user/${_id}`);
+            console.log(response.data);
+            if (response.status === 200) {
+                navigate(`/home/${_id}`);
+            }
+            else {
+                localStorage.clear();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(()=>{
+        getUserData();
+    })
+
     const login = async (e) => {
         try {
             e.preventDefault();
@@ -21,6 +41,7 @@ const Login = () => {
                 const response = await axios.post("http://localhost:4000/auth/signin", { credentials: userData });
                 if (response.status === 200 && response.data.user.verified) {
                     localStorage.setItem("user", response.data.token);
+                    localStorage.setItem("_id", response.data.user._id);
                     navigate(`/home/${response.data.user._id}`);
                 }
                 else {

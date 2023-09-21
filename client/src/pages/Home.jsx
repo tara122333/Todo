@@ -9,7 +9,8 @@ const Home = () => {
     const navigate = useNavigate();
     const getUserToken = async () => {
         const user = localStorage.getItem("user");
-        if (!user || user.length < 30) {
+        const user_id = localStorage.getItem("_id");
+        if (!user || user.length < 30 || _id.length !== 24 || _id !== user_id) {
             navigate("/login")
         }
     }
@@ -20,10 +21,10 @@ const Home = () => {
         try {
             const response = await axios.get(`http://localhost:4000/user/${_id}`);
             console.log(response.data);
-            if(response.status === 200){
+            if (response.status === 200) {
                 setUserData(response.data);
             }
-            else{
+            else {
                 navigate("/login")
             }
         } catch (error) {
@@ -32,12 +33,13 @@ const Home = () => {
     }
     useEffect(() => {
         getUserData();
-    }, [_id])
+    })
+
     return (
         <>
-        {
-            userData && <Navbar {...userData}/>
-        }
+            {
+                userData && <Navbar {...userData} />
+            }
         </>
     )
 }

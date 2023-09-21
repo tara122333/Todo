@@ -8,7 +8,7 @@ const ListSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         required: true
     },
-    task: [
+    list: [
         {
             type: String,
             default: "default"

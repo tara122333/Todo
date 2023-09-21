@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import transporter from '../config/config.mail';
-import { UserModel, UserVerificationModel } from "../database/allModels";
+import { ListModel, UserModel, UserVerificationModel } from "../database/allModels";
 
 transporter.verify((error, success) => {
     if (error) {
@@ -56,6 +56,11 @@ const sendvarificationmail = ({ _id, email }, res) => {
 exports.signIn = async (req, res) => {
     try {
         const user = await UserModel.findByEmailAndPassword(req.body.credentials);
+        if (!user) {
+            res.status(203).json({
+                status: "success", message: "user not found",
+            });
+        }
         if (user.verified) {
             const token = user.generateAuthToken();
             res.status(200).json({
@@ -92,10 +97,16 @@ exports.signUp = async (req, res) => {
         }
         else {
             const newUser = await UserModel.create(req.body.credentials);
+            console.log(newUser);
+            const defaultUserList = {
+                user: newUser._id,
+                list: ["default", "work", "personal"]
+            }
+            const userList = await ListModel.create(defaultUserList);
             const token = newUser.generateAuthToken();
             sendvarificationmail(newUser)
             return res.status(200).json({
-                token, message: "user added successfully", status: "success"
+                userList, token, message: "user added successfully", status: "success"
             });
         }
 
