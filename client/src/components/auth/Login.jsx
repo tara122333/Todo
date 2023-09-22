@@ -81,14 +81,14 @@ const Login = () => {
                                 name="password"
                                 value={userData.password}
                                 onChange={handleChange}
-                                placeholder="****************"
+                                placeholder="*******"
                             />
                         </div>
                         <button onClick={login} className="login-button">Login</button>
                     </div>
                     <div>
                         <Link to={"/signup"}>
-                            create account?
+                        Don't have an account? Sign up
                         </Link>
                     </div>
                     <div className="google-login">

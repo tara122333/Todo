@@ -19,14 +19,17 @@ const Home = () => {
     })
     const getUserData = async () => {
         try {
-            const response = await axios.get(`http://localhost:4000/user/${_id}`);
-            console.log(response.data);
-            if (response.status === 200) {
-                setUserData(response.data);
+            if (_id) {
+                const response = await axios.get(`http://localhost:4000/user/${_id}`);
+                console.log(response.data);
+                if (response.status === 200) {
+                    setUserData(response.data);
+                }
+                else {
+                    navigate("/login")
+                }
             }
-            else {
-                navigate("/login")
-            }
+
         } catch (error) {
             console.log(error);
         }

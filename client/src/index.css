@@ -9,14 +9,14 @@
 
 
 /* Login.css */
-.login-page{
+.signup-page, .login-page{
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100vh;
 }
-.login{
+.signup, .login{
   width: 400px;
   margin: 0 auto;
   padding: 20px 20px 20px 20px;
@@ -27,28 +27,28 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 15px;
 }
 
-.login .login-heading {
+.signup .signup-heading,.login .login-heading {
   font-weight: bold;
 }
 
-.login-form{
+.signup-form, .login-form{
   display: flex;
   flex-direction: column;
   gap: 10px;
   width: 100%;
 }
 
-.login-form-group {
+.signup-form-group, .login-form-group {
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 3px;
 }
 
-.login-form-group label{
+.signup-form-group label, .login-form-group label{
   display: flex;
   font-weight: bold;
   color: rgb(106, 99, 99);
@@ -65,7 +65,7 @@
 } 
 
 
-.login-button {
+.signup-button ,.login-button {
   width: 100%;
   padding: 6px;
   background-color: #0073e6;
@@ -76,7 +76,7 @@
   font-size: 1rem;
 }
 
-.login-button:hover {
+.signup-button:hover ,.login-button:hover {
   background-color: #005bb9;
 }
 
@@ -107,6 +107,7 @@
   cursor: pointer;
 }
 
+/* signup page */
 
 /* navbar */
 
