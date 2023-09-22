@@ -13,6 +13,7 @@ import helmet from 'helmet';
 import auth from './router/authRouter';
 import user from './router/userRouter';
 import todo from './router/todoRouter';
+import list from './router/listRouter'
 // import configs
 // import googleAuthConfig from "./config/google.config"; // google AuthConfig
 // import routeConfig from './config/route.config';
@@ -56,6 +57,7 @@ App.use(cors());
 App.use('/auth', auth);
 App.use('/user', user);
 App.use('/todo', todo);
+App.use('/list', list);
 
 App.get("/", (req, res) => {
     res.status(200).json({ message: "Success" });
