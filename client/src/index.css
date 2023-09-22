@@ -134,15 +134,25 @@
   cursor: pointer;
 }
 
-.navbar-profile-section{
+ .navbar-profile-section{
   display: flex;
   gap: 15px;
   justify-content: center;
   align-items: center;
 }
-
+/*
 .navbar-profile-img{
   width: 30px;
   height: 30px;
   cursor: pointer;
+} */
+
+
+.log-out-btn{
+  background-color: red;
+  padding: 2px 13px;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+
 }

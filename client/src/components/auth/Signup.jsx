@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 const Signup = () => {
     const [userData, setUserData] = useState({
-        fullname : "",
+        fullname: "",
         email: "",
         password: "",
         cpassword: ""
@@ -17,13 +17,22 @@ const Signup = () => {
     const signup = async () => {
         try {
             const response = await axios.post("http://localhost:4000/auth/signup", { credentials: userData });
-            console.log(response);
-            alert(response.data.message);
+            if (response.status === 200) {
+                alert("send a varification mail !! please verify your mail");
+                setUserData({
+                    fullname: "",
+                    email: "",
+                    password: "",
+                    cpassword: ""
+                })
+            }
+            else {
+                alert("Sign up fail!!");
+            }
         } catch (error) {
             console.log(error);
         }
     }
-    console.log(userData);
     return (
         <div className="signup-page">
             <div className="signup">

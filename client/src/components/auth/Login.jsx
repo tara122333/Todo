@@ -17,20 +17,23 @@ const Login = () => {
     const getUserData = async () => {
         try {
             const _id = localStorage.getItem("_id");
-            const response = await axios.get(`http://localhost:4000/user/${_id}`);
-            console.log(response.data);
-            if (response.status === 200) {
-                navigate(`/home/${_id}`);
+            if (_id) {
+                const response = await axios.get(`http://localhost:4000/user/${_id}`);
+                console.log(response.data);
+                if (response.status === 200) {
+                    navigate(`/home/${_id}`);
+                }
+                else {
+                    localStorage.clear();
+                }
             }
-            else {
-                localStorage.clear();
-            }
+
         } catch (error) {
             console.log(error);
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getUserData();
     })
 
@@ -88,7 +91,7 @@ const Login = () => {
                     </div>
                     <div>
                         <Link to={"/signup"}>
-                        Don't have an account? Sign up
+                            Don't have an account? Sign up
                         </Link>
                     </div>
                     <div className="google-login">
