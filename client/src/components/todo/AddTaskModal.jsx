@@ -66,13 +66,31 @@ export default function AddTaskModal({ isOpen, setIsOpen }) {
         }
     }
 
+    const closeModel = () => {
+        setIsOpen(false);
+        setTask({
+            name: "",
+            date: "",
+            time: "",
+            list: "",
+        })
+        setListData("");
+        setListToggel(false);
+        setIsOpen(false)
+
+    }
+
     return (
         <>
             {
                 isOpen && <div className='modal'>
                     <div className='modal-container'>
                         <div className='modal-box'>
-                            <h3>Add Task</h3>
+                            <div className='modal-box-head'>
+                                <h3>Add Task</h3>
+                                <button className='red-btn' onClick={() => closeModel()}>Close</button>
+                            </div>
+
                             <div className="task-form">
                                 <div className="task-form-group">
                                     <label htmlFor="name">What is to be done?</label>
@@ -135,7 +153,7 @@ export default function AddTaskModal({ isOpen, setIsOpen }) {
                                                     <button className='red-btn'
                                                         onClick={() => setListToggel(false)}
                                                     >
-                                                        Cancle
+                                                        Cancel
                                                     </button>
                                                 </>
                                             )
@@ -175,7 +193,6 @@ export default function AddTaskModal({ isOpen, setIsOpen }) {
                             </div>
                         </div>
                     </div>
-                    <button onClick={() => setIsOpen(false)}>Close</button>
                 </div>
             }
         </>

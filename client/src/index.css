@@ -207,6 +207,7 @@
 
 .modal-container{
   width: 500px;
+  background-color: #fff;
   opacity: 1;
   z-index: 1;
   padding: 25px 15px;
@@ -219,10 +220,12 @@
   display: flex;
   gap: 25px;
   width: 100%;
+  justify-content: space-between;
 }
 
 .add-list-box select{
   width: 360px;
+  outline: none;
 }
 
 
@@ -230,6 +233,7 @@
   display: flex;
   width: 100%;
   gap: 16px;
+  justify-content: space-between;
 }
 
 .task-input-box {
@@ -238,11 +242,107 @@
 .add-list-section{
   height: 65px;
 }
+
+.modal-box-head{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
 .red-btn{
-  background-color: rgb(196, 28, 34);
+  background-color: rgb(246, 50, 56);
   padding: 4px 16px;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.todo-section{
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.todo-box{
+  /* border: 2px solid blue; */
+  padding: 4px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.todo-box-heading{
+  color: rgb(85, 84, 84);
+  text-decoration: underline;
+  font-size: medium;
+}
+
+.task-box{
+  display: flex;
+  padding: 4px 12px;
+  border: 1px solid rgb(169, 168, 168);
+  border-radius: 4px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-box-start{
+  display: flex;
+  gap: 25px;
+}
+
+.task-box-end{
+  display: flex;
+  gap: 30px;
+}
+
+.task-box-info{
+  display: flex;
+  gap: 15px;
+}
+
+.task-box-btn{
+  display: flex;
+  gap: 10px;
+}
+
+.delete-btn{
+  background-color: red;
+  color: white;
+  border: none;
+  outline: none;
+  padding: 1px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-btn:hover{
+  background-color: rgb(247, 85, 85);
+}
+.edit-btn{
+  padding: 1px 16px;
+  cursor: pointer;
+}
+
+.edit-btn:hover{
+  background-color: rgb(7, 150, 7);
+}
+
+.task-box-text{
+  font-size: smaller;
+  color: rgb(99, 95, 95);
+  font-weight: 300;
+}
+
+#upcoming-task{
+  border-color: rgb(124, 134, 63);
+}
+#today-task{
+  border-color: blue;
+}
+#completed-task{
+  border-color: rgb(19, 190, 19);
+}
+#pending-task-box{
+  border:1px solid red;
 }
