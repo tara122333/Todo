@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const Signup = () => {
     const [userData, setUserData] = useState({
@@ -9,6 +9,8 @@ const Signup = () => {
         password: "",
         cpassword: ""
     });
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -25,6 +27,7 @@ const Signup = () => {
                     password: "",
                     cpassword: ""
                 })
+                navigate("/login");
             }
             else {
                 alert("Sign up fail!!");
@@ -39,7 +42,7 @@ const Signup = () => {
                 <h2 className="signup-heading">Sign Up</h2>
                 <div className="signup-form">
                     <div className="signup-form-group">
-                        <label htmlFor="fullname">Email</label>
+                        <label htmlFor="fullname">Name</label>
                         <input className="input-box"
                             type="text"
                             id="fullname"

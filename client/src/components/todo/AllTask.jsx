@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AddTaskModal from "./AddTaskModal";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AllTask = () => {
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -14,7 +14,14 @@ const AllTask = () => {
     const [upcomingTask, setUpcomingTask] = useState([]);
 
     const { _id } = useParams();
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        const _id = localStorage.getItem("_id");
+        if (!_id) {
+            navigate('/login');
+        }
+    })
     useEffect(() => {
         const intervalId = setInterval(() => {
             setCurrentDateTime(new Date());
@@ -124,6 +131,15 @@ const AllTask = () => {
         getAllTask();
     })
 
+    const deleteTask = async (props) => {
+        try {
+            const response = await axios.delete(`http://localhost:4000/todo/delete/${props}`);
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const addTask = () => {
         setOpenAddTaskModal(true);
     }
@@ -145,9 +161,10 @@ const AllTask = () => {
                         {
                             upcomingTask.length > 0 && upcomingTask.map((item, index) => (
                                 <>
-                                <div className="task-box" id="upcoming-task">
+                                    <div className="task-box" id="upcoming-task">
                                         <div className="task-box-start">
-                                            <h4 className="task-box-index task-box-text">{index + 1}</h4>
+                                            <h4>🕑</h4>
+                                            {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
                                             <h4 className="task-box-name task-box-text"> {item.name} </h4>
                                         </div>
                                         <div className="task-box-end">
@@ -158,7 +175,7 @@ const AllTask = () => {
                                             </div>
                                             <div className="task-box-btn">
                                                 <button className="btn edit-btn">Edit</button>
-                                                <button className="delete-btn">Delete</button>
+                                                <button className="delete-btn" onClick={() => deleteTask(item._id)}>Delete</button>
                                             </div>
                                         </div>
                                     </div>
@@ -171,9 +188,10 @@ const AllTask = () => {
                         {
                             todayTask.length > 0 && todayTask.map((item, index) => (
                                 <>
-                                <div className="task-box" id="today-task">
+                                    <div className="task-box" id="today-task">
                                         <div className="task-box-start">
-                                            <h4 className="task-box-index task-box-text">{index + 1}</h4>
+                                            <h4>🚀</h4>
+                                            {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
                                             <h4 className="task-box-name task-box-text"> {item.name} </h4>
                                         </div>
                                         <div className="task-box-end">
@@ -184,7 +202,31 @@ const AllTask = () => {
                                             </div>
                                             <div className="task-box-btn">
                                                 <button className="btn edit-btn">Edit</button>
-                                                <button className="delete-btn">Delete</button>
+                                                <button className="delete-btn" onClick={() => deleteTask(item._id)}>Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>
+                            ))
+                        }
+                        {
+                            completedTodayTask.length > 0 && completedTodayTask.map((item, index) => (
+                                <>
+                                    <div className="task-box" id="today-completed-task">
+                                        <div className="task-box-start">
+                                            <h4>✅</h4>
+                                            {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
+                                            <h4 className="task-box-name task-box-text"> {item.name} </h4>
+                                        </div>
+                                        <div className="task-box-end">
+                                            <div className="task-box-info">
+                                                <h4 className="task-box-list task-box-text"> {item.list} </h4>
+                                                <h4 className="task-box-date task-box-text"> {item.date} </h4>
+                                                <h4 className="task-box-time task-box-text"> {item.time} </h4>
+                                            </div>
+                                            <div className="task-box-btn">
+                                                <button className="btn edit-btn">Edit</button>
+                                                <button className="delete-btn" onClick={() => deleteTask(item._id)}>Delete</button>
                                             </div>
                                         </div>
                                     </div>
@@ -197,9 +239,10 @@ const AllTask = () => {
                         {
                             completedTask.length > 0 && completedTask.map((item, index) => (
                                 <>
-                                <div className="task-box" id="completed-task">
+                                    <div className="task-box" id="completed-task">
                                         <div className="task-box-start">
-                                            <h4 className="task-box-index task-box-text">{index + 1}</h4>
+                                            <h4>✅</h4>
+                                            {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
                                             <h4 className="task-box-name task-box-text"> {item.name} </h4>
                                         </div>
                                         <div className="task-box-end">
@@ -210,7 +253,7 @@ const AllTask = () => {
                                             </div>
                                             <div className="task-box-btn">
                                                 <button className="btn edit-btn">Edit</button>
-                                                <button className="delete-btn">Delete</button>
+                                                <button className="delete-btn" onClick={() => deleteTask(item._id)}>Delete</button>
                                             </div>
                                         </div>
                                     </div>
@@ -225,7 +268,8 @@ const AllTask = () => {
                                 <>
                                     <div className="task-box" id="pending-task-box">
                                         <div className="task-box-start">
-                                            <h4 className="task-box-index task-box-text">{index + 1}</h4>
+                                            <h4>❌</h4>
+                                            {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
                                             <h4 className="task-box-name task-box-text"> {item.name} </h4>
                                         </div>
                                         <div className="task-box-end">
@@ -236,7 +280,7 @@ const AllTask = () => {
                                             </div>
                                             <div className="task-box-btn">
                                                 <button className="btn edit-btn">Edit</button>
-                                                <button className="delete-btn">Delete</button>
+                                                <button className="delete-btn" onClick={() => deleteTask(item._id)}>Delete</button>
                                             </div>
                                         </div>
                                     </div>

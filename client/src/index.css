@@ -340,6 +340,9 @@
 #today-task{
   border-color: blue;
 }
+#today-completed-task{
+  border-color: rgb(19, 190, 19);
+}
 #completed-task{
   border-color: rgb(19, 190, 19);
 }

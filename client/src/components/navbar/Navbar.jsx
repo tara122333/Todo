@@ -1,6 +1,6 @@
 const Navbar = (props) => {
 
-    const logout = () =>{
+    const logout = async() =>{
         localStorage.clear();
     }
     return (
