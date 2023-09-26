@@ -6,12 +6,13 @@ import { useNavigate, useParams } from "react-router-dom";
 const AllTask = () => {
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
     const [openAddTaskModal, setOpenAddTaskModal] = useState(false);
-    const [alltask, setAllTask] = useState([]);
     const [completedTask, setCompletedTask] = useState([]);
     const [todayTask, setTodayTask] = useState([]);
     const [completedTodayTask, setCompletedTodayTask] = useState([]);
     const [pendingTask, setPendingTask] = useState([]);
     const [upcomingTask, setUpcomingTask] = useState([]);
+    const [type, setType] = useState('');
+    const [id, setId] = useState('');
 
     const { _id } = useParams();
     const navigate = useNavigate();
@@ -85,7 +86,12 @@ const AllTask = () => {
                     else if (year >= currentYear) {
                         if (month >= currentMonth) {
                             if (day > currentDay) {
-                                upcomingTaskArr.push(task[i]);
+                                if (task[i].status) {
+                                    completedTaskArr.push(task[i]);
+                                }
+                                else {
+                                    upcomingTaskArr.push(task[i]);
+                                }
                             }
                             else if (day === currentDay) {
 
@@ -134,18 +140,35 @@ const AllTask = () => {
     const deleteTask = async (props) => {
         try {
             const response = await axios.delete(`http://localhost:4000/todo/delete/${props}`);
-            console.log(response);
+            if (response.status === 200) {
+                alert("task deleted success!!");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const completedTaks = async (props) => {
+        try {
+            await axios.put(`http://localhost:4000/todo/completed/task/${props}`);
         } catch (error) {
             console.log(error);
         }
     }
 
     const addTask = () => {
+        setType("add")
+        setOpenAddTaskModal(true);
+    }
+
+    const editTask = (props) => {
+        setType("edit")
+        setId(props);
         setOpenAddTaskModal(true);
     }
     return (
         <>
-            <AddTaskModal isOpen={openAddTaskModal} setIsOpen={setOpenAddTaskModal} />
+            <AddTaskModal isOpen={openAddTaskModal} setIsOpen={setOpenAddTaskModal} type={type} setType={setType} id={id} setId={setId} />
             <div className="container">
                 <div className="container-head">
                     <div className="container-time">
@@ -166,6 +189,8 @@ const AllTask = () => {
                                             <input
                                                 type="checkbox"
                                                 name="check"
+                                                value={item._id}
+                                                onClick={() => { completedTaks(item._id) }}
                                             />
                                             <h4>🕑</h4>
                                             {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
@@ -178,7 +203,7 @@ const AllTask = () => {
                                                 <h4 className="task-box-time task-box-text"> {item.time} </h4>
                                             </div>
                                             <div className="task-box-btn">
-                                                <button className="btn edit-btn">Edit</button>
+                                                <button className="btn edit-btn" onClick={() => { editTask(item._id) }}>Edit</button>
                                                 <button className="delete-btn" onClick={() => deleteTask(item._id)}>Delete</button>
                                             </div>
                                         </div>
@@ -194,6 +219,12 @@ const AllTask = () => {
                                 <>
                                     <div className="task-box" id="today-task">
                                         <div className="task-box-start">
+                                            <input
+                                                type="checkbox"
+                                                name="check"
+                                                value={item._id}
+                                                onClick={() => { completedTaks(item._id) }}
+                                            />
                                             <h4>🚀</h4>
                                             {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
                                             <h4 className="task-box-name task-box-text"> {item.name} </h4>
@@ -205,7 +236,7 @@ const AllTask = () => {
                                                 <h4 className="task-box-time task-box-text"> {item.time} </h4>
                                             </div>
                                             <div className="task-box-btn">
-                                                <button className="btn edit-btn">Edit</button>
+                                                <button className="btn edit-btn" onClick={() => { editTask(item._id) }}>Edit</button>
                                                 <button className="delete-btn" onClick={() => deleteTask(item._id)}>Delete</button>
                                             </div>
                                         </div>
@@ -229,7 +260,7 @@ const AllTask = () => {
                                                 <h4 className="task-box-time task-box-text"> {item.time} </h4>
                                             </div>
                                             <div className="task-box-btn">
-                                                <button className="btn edit-btn">Edit</button>
+                                                <button className="btn edit-btn" onClick={() => { editTask(item._id) }}>Edit</button>
                                                 <button className="delete-btn" onClick={() => deleteTask(item._id)}>Delete</button>
                                             </div>
                                         </div>
@@ -256,7 +287,7 @@ const AllTask = () => {
                                                 <h4 className="task-box-time task-box-text"> {item.time} </h4>
                                             </div>
                                             <div className="task-box-btn">
-                                                <button className="btn edit-btn">Edit</button>
+                                                <button className="btn edit-btn" onClick={() => { editTask(item._id) }}>Edit</button>
                                                 <button className="delete-btn" onClick={() => deleteTask(item._id)}>Delete</button>
                                             </div>
                                         </div>
@@ -283,7 +314,7 @@ const AllTask = () => {
                                                 <h4 className="task-box-time task-box-text"> {item.time} </h4>
                                             </div>
                                             <div className="task-box-btn">
-                                                <button className="btn edit-btn">Edit</button>
+                                                <button className="btn edit-btn" onClick={() => { editTask(item._id) }}>Edit</button>
                                                 <button className="delete-btn" onClick={() => deleteTask(item._id)}>Delete</button>
                                             </div>
                                         </div>

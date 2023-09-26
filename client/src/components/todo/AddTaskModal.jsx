@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 // import Select from 'react-select'
 
-export default function AddTaskModal({ isOpen, setIsOpen }) {
+export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = "", setId }) {
     const [list, setList] = useState("");
     const [listData, setListData] = useState("");
     const [listToggel, setListToggel] = useState(false);
@@ -74,6 +74,8 @@ export default function AddTaskModal({ isOpen, setIsOpen }) {
             time: "",
             list: "",
         })
+        setType("");
+        setId("");
         setListData("");
         setListToggel(false);
         setIsOpen(false)

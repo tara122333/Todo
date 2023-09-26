@@ -85,36 +85,44 @@ exports.completedTodoTask = async (req, res) => {
     try {
         const { _id } = req.params;
         const findUserTask = await TaskModel.findOne({ 'task._id': _id });
-        for (let i = 0; i < findUserTask.task.length; i++) {
-            if (_id === findUserTask.task[i]._id.toString()) {
-                const newTask = {
-                    name: findUserTask.task[i].name,
-                    date: findUserTask.task[i].date,
-                    time: findUserTask.task[i].time,
-                    list: findUserTask.task[i].list,
-                    status: true,
-                    _id: findUserTask.task[i]._id
+        if (findUserTask) {
+            const arr = [];
+            for (let i = 0; i < findUserTask?.task?.length; i++) {
+                if (_id === findUserTask.task[i]._id.toString()) {
+                    const newTask = {
+                        name: findUserTask?.task[i].name,
+                        date: findUserTask?.task[i].date,
+                        time: findUserTask?.task[i].time,
+                        list: findUserTask?.task[i].list,
+                        status: true,
+                        _id: findUserTask?.task[i]._id
+                    }
+                    arr.push(newTask);
                 }
-                arr.push(newTask);
+                else {
+                    arr.push(findUserTask?.task[i]);
+                }
             }
-            else {
-                arr.push(findUserTask.task[i]);
-            }
+
+            await TaskModel.updateOne(
+                {
+                    _id: findUserTask._id
+                },
+                {
+                    $set: {
+                        task: arr
+                    }
+                },
+                {
+                    new: true
+                }
+            )
+            return res.status(200).json({ message: "task completed!" });
         }
-        await TaskModel.updateOne(
-            {
-                'task._id': _id
-            },
-            {
-                $set: {
-                    task: arr
-                }
-            },
-            {
-                new: true
-            }
-        )
-        return res.status(200).json({ message: "task completed!" });
+        else {
+            return res.status(201).json({ message: "task not found!" });
+        }
+
 
     } catch (error) {
         return res.status(500).json({ error: error.message });
