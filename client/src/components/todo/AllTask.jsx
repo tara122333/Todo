@@ -11,6 +11,8 @@ const AllTask = () => {
     const [completedTodayTask, setCompletedTodayTask] = useState([]);
     const [pendingTask, setPendingTask] = useState([]);
     const [upcomingTask, setUpcomingTask] = useState([]);
+    const [listData, setListData] = useState("");
+    const [list, setList] = useState("");
     const [type, setType] = useState('');
     const [id, setId] = useState('');
 
@@ -33,12 +35,13 @@ const AllTask = () => {
 
     const getAllTask = async () => {
         try {
-            const response = await axios(`http://localhost:4000/todo/get/${_id}`);
+            const response = await axios(`http://localhost:4000/todo/get/${_id}/?list=${list}`);
+            console.log(response);
             if (response.status === 200) {
-                const task = response?.data?.getUserTask?.task;
-                const currentYear = currentDateTime.toString().split(' ')[3];
-                let currentMonth = currentDateTime.toString().split(' ')[1];
-                const currentDay = currentDateTime.toString().split(' ')[2];
+                const task = response?.data?.taskArr;
+                const currentYear = currentDateTime?.toString().split(' ')[3];
+                let currentMonth = currentDateTime?.toString().split(' ')[1];
+                const currentDay = currentDateTime?.toString().split(' ')[2];
                 const upcomingTaskArr = [];
                 const todayTaskArr = [];
                 const completedTodayTaskArr = [];
@@ -72,9 +75,9 @@ const AllTask = () => {
                     currentMonth = "12";
                 }
                 for (let i = 0; i < task?.length; i++) {
-                    const day = task[i].date.toString()?.split('-')[2];
-                    const year = task[i].date.toString().split('-')[0];
-                    const month = task[i].date.toString().split('-')[1];
+                    const day = task[i]?.date?.toString().split('-')[2];
+                    const year = task[i]?.date?.toString().split('-')[0];
+                    const month = task[i]?.date?.toString().split('-')[1];
                     if (year === currentYear && month === currentMonth && day === currentDay) {
                         if (task[i].status) {
                             completedTodayTaskArr.push(task[i]);
@@ -96,12 +99,15 @@ const AllTask = () => {
                             else if (day === currentDay) {
 
                             }
+                            else if (day < currentDay && month === currentMonth) {
+                                pendingTaskArr.push(task[i]);
+                            }
                             else {
                                 if (task[i].status) {
                                     completedTaskArr.push(task[i]);
                                 }
                                 else {
-                                    pendingTaskArr.push(task[i]);
+                                    upcomingTaskArr.push(task[i]);
                                 }
                             }
                         } else {
@@ -156,6 +162,18 @@ const AllTask = () => {
         }
     }
 
+    const getAllUserList = async () => {
+        try {
+            const response = await axios.get(`http://localhost:4000/list/get/${_id}`);
+            setListData(response.data.findUserList.list)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        getAllUserList();
+    })
+
     const addTask = () => {
         setType("add")
         setOpenAddTaskModal(true);
@@ -171,12 +189,29 @@ const AllTask = () => {
             <AddTaskModal isOpen={openAddTaskModal} setIsOpen={setOpenAddTaskModal} type={type} setType={setType} id={id} setId={setId} />
             <div className="container">
                 <div className="container-head">
-                    <div className="container-time">
-                        <h5>Date : {currentDateTime.toString().split(' ')[2]}-{currentDateTime.toString().split(' ')[1]}-{currentDateTime.toString().split(' ')[3]}
-                        </h5>
-                        <h5>Time : {currentDateTime.toString().split(' ')[4]}</h5>
+                    <div className="filter-box">
+                        <label htmlFor="time">Task Filter (Lists)</label>
+                        <select
+                            value={list}
+                            onChange={(e)=>{setList(e.target.value)}}
+                            name="list"
+                        >
+                            <option value={""}>All</option>
+                            {
+                                listData && listData?.map((item) => (
+                                    <option value={item}>{item}</option>
+                                ))
+                            }
+                        </select>
                     </div>
-                    <button className="btn" onClick={addTask}>Add Task +</button>
+                    <div className="container-info">
+                        <div className="container-time">
+                            <h5>Date : {currentDateTime.toString().split(' ')[2]}-{currentDateTime.toString().split(' ')[1]}-{currentDateTime.toString().split(' ')[3]}
+                            </h5>
+                            <h5>Time : {currentDateTime.toString().split(' ')[4]}</h5>
+                        </div>
+                        <button className="btn" onClick={addTask}>Add Task +</button>
+                    </div>
                 </div>
                 <div className="todo-section">
                     <div className="todo-box">

@@ -12,6 +12,7 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
         date: "",
         time: "",
         list: "",
+        status: false
     })
     const { _id } = useParams();
 
@@ -31,22 +32,65 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
         getAllUserList();
     })
 
+    const getTaskData = async () => {
+        try {
+            if (type === "edit") {
+                const response = await axios.get(`http://localhost:4000/todo/get/task/${id}`);
+                if (response.status === 200) {
+                    setTask({
+                        name: response.data.task.name,
+                        date: response.data.task.date,
+                        time: response.data.task.time,
+                        list: response.data.task.list,
+                        status: response.data.task.status
+                    })
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getTaskData();
+    }, [id])
+
     const addTask = async () => {
         try {
-            const response = await axios.post(`http://localhost:4000/todo/add/${_id}`, { task });
-            console.log(response);
-            if (response.status === 200) {
-                setIsOpen(false);
-                setTask({
-                    name: "",
-                    date: "",
-                    time: "",
-                    list: "",
-                })
-                setListData("");
-                setListToggel(false);
-                alert("task added success!!");
+            if (type === "add") {
+                const response = await axios.post(`http://localhost:4000/todo/add/${_id}`, { task });
+                if (response.status === 200) {
+                    setIsOpen(false);
+                    setTask({
+                        name: "",
+                        date: "",
+                        time: "",
+                        list: "",
+                    })
+                    setListData("");
+                    setListToggel(false);
+                    alert("task added success!!");
+                }
             }
+            else if (type === "edit" && id.length > 2) {
+                const response = await axios.put(`http://localhost:4000/todo/update/task/${id}`, { task });
+                if (response.status === 200) {
+                    setIsOpen(false);
+                    setTask({
+                        name: "",
+                        date: "",
+                        time: "",
+                        list: "",
+                        status: false
+                    })
+                    setId("");
+                    setType("");
+                    setListData("");
+                    setListToggel(false);
+                    alert("task updated success!!");
+                }
+            }
+
         } catch (error) {
             console.log(error);
         }
@@ -73,6 +117,7 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
             date: "",
             time: "",
             list: "",
+            status: false
         })
         setType("");
         setId("");
@@ -125,6 +170,21 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
                                         onChange={handleTask}
                                     />
                                 </div>
+
+                                {
+                                    type === "edit" && <div className="task-form-group">
+                                        <label htmlFor="time">Task Status</label>
+                                        <select
+                                            value={task.status}
+                                            onChange={handleTask}
+                                            name="status"
+                                        >
+                                            <option value={true}>Completed</option>
+                                            <option value={false}>Not Completed</option>
+                                        </select>
+                                    </div>
+                                }
+
 
                                 <div className="task-form-group">
                                     <label htmlFor="time">Add to list</label>
@@ -190,7 +250,9 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
                                     onClick={addTask}
                                     className="task-button"
                                 >
-                                    Add
+                                    {
+                                        type === 'add' ? "Add" : "Submit"
+                                    }
                                 </button>
                             </div>
                         </div>
