@@ -6,23 +6,20 @@ require("./database/connection");
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-// import passport from 'passport';
-// const session = require('express-session')
+import passport from 'passport';
+import session from 'express-session';
 
 // imports my modules
 import auth from './router/authRouter';
 import user from './router/userRouter';
 import todo from './router/todoRouter';
 import list from './router/listRouter'
+
 // import configs
-// import googleAuthConfig from "./config/google.config"; // google AuthConfig
+import googleAuthConfig from "./config/config.goolge"; // google AuthConfig
 // import routeConfig from './config/route.config';
 
 
-
-
-// DB
-// import MongoDb from './database/connection';
 
 // importing microservices route
 // import Auth from './API/auth';
@@ -30,11 +27,11 @@ import list from './router/listRouter'
 const App = express();
 
 
-// App.use(session({
-//     resave: false,
-//     saveUninitialized: true,
-//     secret: 'bla bla bla'
-// }));
+App.use(session({
+    resave: false,
+    saveUninitialized: true,
+    secret: 'bla bla bla'
+}));
 
 
 
@@ -43,13 +40,13 @@ App.use(express.json());
 App.use(express.urlencoded({ extended: false }));
 App.use(helmet());
 App.use(cors());
-// App.use(passport.initialize());
-// App.use(passport.session());
+App.use(passport.initialize());
+App.use(passport.session());
 
 
 
 // passpoer configuration
-// googleAuthConfig(passport);
+googleAuthConfig(passport);
 // routeConfig(passport);
 
 

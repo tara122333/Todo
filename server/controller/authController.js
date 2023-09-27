@@ -97,7 +97,6 @@ exports.signUp = async (req, res) => {
         }
         else {
             const newUser = await UserModel.create(req.body.credentials);
-            console.log(newUser);
             const defaultUserList = {
                 user: newUser._id,
                 list: ["default", "work", "personal"]
