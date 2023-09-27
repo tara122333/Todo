@@ -37,6 +37,9 @@ const Login = () => {
         getUserData();
     })
 
+    const googleLogin = async () => {
+        window.location.href = `http://localhost:4000/auth/google`;
+    }
     const login = async (e) => {
         try {
             e.preventDefault();
@@ -94,7 +97,7 @@ const Login = () => {
                             Don't have an account? Sign up
                         </Link>
                     </div>
-                    <div className="google-login">
+                    <div className="google-login" onClick={googleLogin}>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/800px-Google_%22G%22_Logo.svg.png" alt="google login" className="google-logo" />
                         <button className="google-login-button">Login with Google</button>
                     </div>

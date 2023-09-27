@@ -36,6 +36,10 @@ const Signup = () => {
             console.log(error);
         }
     }
+
+    const googleSignUp = async () => {
+        window.location.href = `http://localhost:4000/auth/google`;
+    }
     return (
         <div className="signup-page">
             <div className="signup">
@@ -94,7 +98,7 @@ const Signup = () => {
                         Have an account? Log in
                     </Link>
                 </div>
-                <div className="google-login">
+                <div className="google-login" onClick={googleSignUp}>
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/800px-Google_%22G%22_Logo.svg.png" alt="google login" className="google-logo" />
                     <button className="google-login-button">Sign up with Google</button>
                 </div>
