@@ -7,4 +7,3 @@ router.post('/add/:_id', listController.addList);
 router.get('/get/:_id', listController.getList);
 
 export default router;
-

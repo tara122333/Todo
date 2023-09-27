@@ -19,7 +19,6 @@ const Login = () => {
             const _id = localStorage.getItem("_id");
             if (_id) {
                 const response = await axios.get(`http://localhost:4000/user/${_id}`);
-                console.log(response.data);
                 if (response.status === 200) {
                     navigate(`/home/${_id}`);
                 }
