@@ -100,7 +100,12 @@ const AllTask = () => {
 
                             }
                             else if (day < currentDay && month === currentMonth) {
-                                pendingTaskArr.push(task[i]);
+                                if (task[i].status) {
+                                    completedTaskArr.push(task[i]);
+                                }
+                                else {
+                                    pendingTaskArr.push(task[i]);
+                                }
                             }
                             else {
                                 if (task[i].status) {
@@ -193,7 +198,7 @@ const AllTask = () => {
                         <label htmlFor="time">Task Filter (Lists)</label>
                         <select
                             value={list}
-                            onChange={(e)=>{setList(e.target.value)}}
+                            onChange={(e) => { setList(e.target.value) }}
                             name="list"
                         >
                             <option value={""}>All</option>
