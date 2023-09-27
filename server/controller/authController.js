@@ -57,18 +57,18 @@ exports.signIn = async (req, res) => {
     try {
         const user = await UserModel.findByEmailAndPassword(req.body.credentials);
         if (!user) {
-            res.status(203).json({
+            return res.status(203).json({
                 status: "success", message: "user not found",
             });
         }
         if (user.verified) {
             const token = user.generateAuthToken();
-            res.status(200).json({
+            return res.status(200).json({
                 token, user, status: "success", message: "signin successfully",
             });
         }
         else {
-            res.status(202).json({
+            return res.status(202).json({
                 status: "user not verified"
             });
         }
