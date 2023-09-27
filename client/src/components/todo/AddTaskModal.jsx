@@ -11,7 +11,7 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
         name: "",
         date: "",
         time: "",
-        list: "",
+        list: "default",
         status: false
     })
     const { _id } = useParams();
