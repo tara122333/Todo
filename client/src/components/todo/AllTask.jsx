@@ -343,6 +343,12 @@ const AllTask = () => {
                                 <>
                                     <div className="task-box" id="pending-task-box">
                                         <div className="task-box-start">
+                                            <input
+                                                type="checkbox"
+                                                name="checkpendin"
+                                                value={item._id}
+                                                onClick={() => { completedTaks(item._id) }}
+                                            />
                                             <h4>❌</h4>
                                             {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
                                             <h4 className="task-box-name task-box-text"> {item.name} </h4>
