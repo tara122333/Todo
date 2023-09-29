@@ -18,7 +18,7 @@ const Login = () => {
         try {
             const _id = localStorage.getItem("_id");
             if (_id) {
-                const response = await axios.get(`http://localhost:4000/user/${_id}`);
+                const response = await axios.get(`/user/${_id}`);
                 if (response.status === 200) {
                     navigate(`/home/${_id}`);
                 }
@@ -26,7 +26,6 @@ const Login = () => {
                     localStorage.clear();
                 }
             }
-
         } catch (error) {
             console.log(error);
         }
@@ -43,9 +42,9 @@ const Login = () => {
         try {
             e.preventDefault();
             if (userData.email.length > 0 && userData.password.length > 0) {
-                const response = await axios.post("http://localhost:4000/auth/signin", { credentials: userData });
+                const response = await axios.post("/auth/signin", { credentials: userData });
                 if (response.status === 200 && response.data.user.verified) {
-                    localStorage.setItem("user", response.data.token);
+                    localStorage.setItem("user", JSON.stringify({ token: response.data.token }));
                     localStorage.setItem("_id", response.data.user._id);
                     navigate(`/home/${response.data.user._id}`);
                 }

@@ -3,7 +3,7 @@ const { ListModel } = require("../database/list");
 
 exports.getList = async (req, res) => {
     try {
-        const { _id } = req.params;
+        const _id = req.session.passport.user._doc._id.toString();
         const findUserList = await ListModel.findOne({ user: _id });
         if (findUserList) {
             return res.status(200).json({ findUserList });
@@ -17,7 +17,7 @@ exports.getList = async (req, res) => {
 
 exports.addList = async (req, res) => {
     try {
-        const { _id } = req.params;
+        const _id = req.session.passport.user._doc._id.toString();
         const { list } = req.body;
         const updateUserList = await ListModel.findOneAndUpdate(
             {

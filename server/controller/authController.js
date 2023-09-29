@@ -13,7 +13,7 @@ transporter.verify((error, success) => {
 });
 
 const sendvarificationmail = ({ _id, email }, res) => {
-    const currentUrl = "http://localhost:4000/";
+    const currentUrl = "http://localhost:4000";
     const uId = "4521354tara15120";
     const uniqueString = uId + _id;
 

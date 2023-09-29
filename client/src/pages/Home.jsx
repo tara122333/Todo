@@ -20,14 +20,16 @@ const Home = () => {
     })
     const getUserData = async () => {
         try {
-            if (_id) {
-                const response = await axios.get(`http://localhost:4000/user/${_id}`);
-                if (response.status === 200) {
-                    setUserData(response.data);
+            const response = await axios.get(`/user`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("user")}`
                 }
-                else {
-                    navigate("/login")
-                }
+            });
+            if (response.status === 200) {
+                setUserData(response.data);
+            }
+            else {
+                navigate("/login")
             }
         } catch (error) {
             console.log(error);

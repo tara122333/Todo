@@ -17,7 +17,7 @@ import list from './router/listRouter'
 
 // import configs
 import googleAuthConfig from "./config/config.goolge"; // google AuthConfig
-// import routeConfig from './config/route.config';
+import routeConfig from './config/route.config';
 
 
 
@@ -47,7 +47,7 @@ App.use(passport.session());
 
 // passpoer configuration
 googleAuthConfig(passport);
-// routeConfig(passport);
+routeConfig(passport);
 
 
 // Application Route

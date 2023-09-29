@@ -17,9 +17,6 @@ const Navbar = (props) => {
                     <p className="log-out-btn"
                     onClick={logout}
                     >Log out</p>
-                    {/* <div className="navbar-profile-img">
-                        <img src="https://assets.stickpng.com/thumbs/585e4beacb11b227491c3399.png" alt="user-profile" style={{ width: '100%', height: "100%" }} />
-                    </div> */}
                 </div>
             </div>
         </>

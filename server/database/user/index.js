@@ -30,7 +30,7 @@ UserSchema.methods.generateAuthToken = function () {
     const token = jwt.sign({
         user: this._id.toString(),
     },
-        "thisdjbsdkjvbksdjbvksjbvkdsjb"
+        "user"
     )
     return token;
 };

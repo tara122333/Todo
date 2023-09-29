@@ -22,7 +22,11 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
 
     const getAllUserList = async () => {
         try {
-            const response = await axios.get(`http://localhost:4000/list/get/${_id}`);
+            const response = await axios.get(`/list/get`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("user")}`
+                }
+            });
             setListData(response.data.findUserList.list)
         } catch (error) {
             console.log(error);
@@ -35,7 +39,11 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
     const getTaskData = async () => {
         try {
             if (type === "edit") {
-                const response = await axios.get(`http://localhost:4000/todo/get/task/${id}`);
+                const response = await axios.get(`/todo/get/task/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("user")}`
+                    }
+                });
                 if (response.status === 200) {
                     setTask({
                         name: response.data.task.name,
@@ -58,29 +66,39 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
     const addTask = async () => {
         try {
             if (type === "add") {
-                const response = await axios.post(`http://localhost:4000/todo/add/${_id}`, { task });
+                setId("54");
+                const response = await axios.post(`/todo/add`, { task }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("user")}`
+                    }
+                });
                 if (response.status === 200) {
                     setIsOpen(false);
                     setTask({
                         name: "",
                         date: "",
                         time: "",
-                        list: "",
+                        list: "default",
                     })
                     setListData("");
+                    setId(" ");
                     setListToggel(false);
                     alert("task added success!!");
                 }
             }
             else if (type === "edit" && id.length > 2) {
-                const response = await axios.put(`http://localhost:4000/todo/update/task/${id}`, { task });
+                const response = await axios.put(`/todo/update/task/${id}`, { task }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("user")}`
+                    }
+                });
                 if (response.status === 200) {
                     setIsOpen(false);
                     setTask({
                         name: "",
                         date: "",
                         time: "",
-                        list: "",
+                        list: "default",
                         status: false
                     })
                     setId("");
@@ -98,7 +116,11 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
 
     const addNewList = async () => {
         try {
-            const response = await axios.post(`http://localhost:4000/list/add/${_id}`, { list });
+            const response = await axios.post(`/list/add`, { list }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("user")}`
+                }
+            });
             console.log(response);
             if (response.status === 200) {
                 setListToggel(false);
@@ -116,7 +138,7 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
             name: "",
             date: "",
             time: "",
-            list: "",
+            list: "default",
             status: false
         })
         setType("");
@@ -130,134 +152,138 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
     return (
         <>
             {
-                isOpen && <div className='modal'>
-                    <div className='modal-container'>
-                        <div className='modal-box'>
-                            <div className='modal-box-head'>
-                                <h3>Add Task</h3>
-                                <button className='red-btn' onClick={() => closeModel()}>Close</button>
-                            </div>
-
-                            <div className="task-form">
-                                <div className="task-form-group">
-                                    <label htmlFor="name">What is to be done?</label>
-                                    <input className="input-box"
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        onChange={handleTask}
-                                        value={task.name}
-                                        placeholder="Enter Task Here.."
-                                    />
-                                </div>
-                                <div className="task-form-group">
-                                    <label htmlFor="date">Due date</label>
-                                    <input className="input-box"
-                                        type="date"
-                                        id="date"
-                                        name="date"
-                                        value={task.date}
-                                        onChange={handleTask}
-                                    />
-                                </div>
-                                <div className="task-form-group">
-                                    <label htmlFor="time">Due Time</label>
-                                    <input className="input-box"
-                                        type="time"
-                                        id="time"
-                                        name="time"
-                                        value={task.time}
-                                        onChange={handleTask}
-                                    />
+                isOpen && <>
+                    <div className='modal'>
+                        <div className='modal-container'>
+                            <div className='modal-box'>
+                                <div className='modal-box-head'>
+                                    <h3>Add Task</h3>
+                                    <button className='red-btn' onClick={() => closeModel()}>Close</button>
                                 </div>
 
-                                {
-                                    type === "edit" && <div className="task-form-group">
-                                        <label htmlFor="time">Task Status</label>
-                                        <select
-                                            value={task.status}
+                                <div className="task-form">
+                                    <div className="task-form-group">
+                                        <label htmlFor="name">What is to be done?</label>
+                                        <input className="input-box"
+                                            type="text"
+                                            id="name"
+                                            name="name"
                                             onChange={handleTask}
-                                            name="status"
-                                        >
-                                            <option value={true}>Completed</option>
-                                            <option value={false}>Not Completed</option>
-                                        </select>
+                                            value={task.name}
+                                            placeholder="Enter Task Here.."
+                                        />
                                     </div>
-                                }
-
-
-                                <div className="task-form-group">
-                                    <label htmlFor="time">Add to list</label>
-                                    <div className='add-list-box'>
-                                        <select
-                                            value={task.list}
+                                    <div className="task-form-group">
+                                        <label htmlFor="date">Due date</label>
+                                        <input className="input-box"
+                                            type="date"
+                                            id="date"
+                                            name="date"
+                                            value={task.date}
                                             onChange={handleTask}
-                                            name="list"
-                                            required
-                                        >
-                                            {
-                                                listData && listData?.map((item) => (
-                                                    <option value={item}>{item}</option>
-                                                ))
-                                            }
-                                        </select>
-                                        {
-                                            !listToggel ? (
-                                                <>
-                                                    <button className='btn'
-                                                        onClick={() => setListToggel(true)}
-                                                    >
-                                                        Add List
-                                                    </button>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <button className='red-btn'
-                                                        onClick={() => setListToggel(false)}
-                                                    >
-                                                        Cancel
-                                                    </button>
-                                                </>
-                                            )
-                                        }
-
+                                        />
                                     </div>
-                                </div>
-                                <div className='add-list-section'>
+                                    <div className="task-form-group">
+                                        <label htmlFor="time">Due Time</label>
+                                        <input className="input-box"
+                                            type="time"
+                                            id="time"
+                                            name="time"
+                                            value={task.time}
+                                            onChange={handleTask}
+                                        />
+                                    </div>
+
                                     {
-                                        listToggel && <div className="task-form-group">
-
-                                            <label htmlFor="list">Add New List</label>
-                                            <div className='add-list'>
-                                                <input className="input-box task-input-box"
-                                                    type="text"
-                                                    id="list"
-                                                    name="list"
-                                                    onChange={(e) => setList(e.target.value)}
-                                                    value={list}
-                                                    placeholder="Enter List Name"
-                                                />
-                                                <button className='btn'
-                                                    onClick={addNewList}>
-                                                    Save
-                                                </button>
-                                            </div>
+                                        type === "edit" && <div className="task-form-group">
+                                            <label htmlFor="time">Task Status</label>
+                                            <select
+                                                value={task.status}
+                                                onChange={handleTask}
+                                                name="status"
+                                            >
+                                                <option value={true}>Completed</option>
+                                                <option value={false}>Not Completed</option>
+                                            </select>
                                         </div>
                                     }
-                                </div>
 
-                                <button
-                                    onClick={addTask}
-                                    className="task-button"
-                                >
-                                    {
-                                        type === 'add' ? "Add" : "Submit"
-                                    }
-                                </button>
+
+                                    <div className="task-form-group">
+                                        <label htmlFor="time">Add to list</label>
+                                        <div className='add-list-box'>
+                                            <select
+                                                value={task.list}
+                                                onChange={handleTask}
+                                                name="list"
+                                                required
+                                            >
+                                                {
+                                                    listData && listData?.map((item) => (
+                                                        <>
+                                                            <option value={item}>{item}</option>
+                                                        </>
+                                                    ))
+                                                }
+                                            </select>
+                                            {
+                                                !listToggel ? (
+                                                    <>
+                                                        <button className='btn'
+                                                            onClick={() => setListToggel(true)}
+                                                        >
+                                                            Add List
+                                                        </button>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <button className='red-btn'
+                                                            onClick={() => setListToggel(false)}
+                                                        >
+                                                            Cancel
+                                                        </button>
+                                                    </>
+                                                )
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div className='add-list-section'>
+                                        {
+                                            listToggel && <div className="task-form-group">
+
+                                                <label htmlFor="list">Add New List</label>
+                                                <div className='add-list'>
+                                                    <input className="input-box task-input-box"
+                                                        type="text"
+                                                        id="list"
+                                                        name="list"
+                                                        onChange={(e) => setList(e.target.value)}
+                                                        value={list}
+                                                        placeholder="Enter List Name"
+                                                    />
+                                                    <button className='btn'
+                                                        onClick={addNewList}>
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <button
+                                        onClick={addTask}
+                                        className="task-button"
+                                    >
+                                        {
+                                            type === 'add' ? "Add" : "Submit"
+                                        }
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </>
             }
         </>
     )

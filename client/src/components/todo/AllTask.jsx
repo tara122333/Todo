@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const AllTask = () => {
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
     const [openAddTaskModal, setOpenAddTaskModal] = useState(false);
+    const [checkboxes, setCheckboxes] = useState({});
     const [completedTask, setCompletedTask] = useState([]);
     const [todayTask, setTodayTask] = useState([]);
     const [completedTodayTask, setCompletedTodayTask] = useState([]);
@@ -35,8 +36,12 @@ const AllTask = () => {
 
     const getAllTask = async () => {
         try {
-            const response = await axios(`http://localhost:4000/todo/get/${_id}/?list=${list}`);
-            console.log(response);
+            const response = await axios(`/todo/get/?list=${list}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("user")}`
+                }
+            });
+            // console.log(response);
             if (response.status === 200) {
                 const task = response?.data?.taskArr;
                 const currentYear = currentDateTime?.toString().split(' ')[3];
@@ -146,12 +151,17 @@ const AllTask = () => {
 
     useEffect(() => {
         getAllTask();
-    })
+    }, [list, id])
 
     const deleteTask = async (props) => {
         try {
-            const response = await axios.delete(`http://localhost:4000/todo/delete/${props}`);
+            const response = await axios.delete(`/todo/delete/${props}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("user")}`
+                }
+            });
             if (response.status === 200) {
+                getAllTask();
                 alert("task deleted success!!");
             }
         } catch (error) {
@@ -161,7 +171,15 @@ const AllTask = () => {
 
     const completedTaks = async (props) => {
         try {
-            await axios.put(`http://localhost:4000/todo/completed/task/${props}`);
+            const response = await axios.get(`/todo/completed/task/${props}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("user")}`
+                }
+            });
+            if (response.status === 200) {
+                alert("Task done!");
+                getAllTask();
+            }
         } catch (error) {
             console.log(error);
         }
@@ -169,7 +187,11 @@ const AllTask = () => {
 
     const getAllUserList = async () => {
         try {
-            const response = await axios.get(`http://localhost:4000/list/get/${_id}`);
+            const response = await axios.get(`/list/get`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("user")}`
+                }
+            });
             setListData(response.data.findUserList.list)
         } catch (error) {
             console.log(error);
@@ -189,6 +211,15 @@ const AllTask = () => {
         setId(props);
         setOpenAddTaskModal(true);
     }
+
+    const handleCheckboxChange = (event) => {
+        const { name, checked } = event.target;
+        setCheckboxes({
+            ...checkboxes,
+            [name]: checked,
+        });
+    };
+
     return (
         <>
             <AddTaskModal isOpen={openAddTaskModal} setIsOpen={setOpenAddTaskModal} type={type} setType={setType} id={id} setId={setId} />
@@ -198,7 +229,7 @@ const AllTask = () => {
                         <label htmlFor="time">Task Filter (Lists)</label>
                         <select
                             value={list}
-                            onChange={(e) => { setList(e.target.value) }}
+                            onChange={(e) => { setList(e.target.value); }}
                             name="list"
                         >
                             <option value={""}>All</option>
@@ -224,12 +255,13 @@ const AllTask = () => {
                         {
                             upcomingTask.length > 0 && upcomingTask.map((item, index) => (
                                 <>
-                                    <div className="task-box" id="upcoming-task">
+                                    <div className="task-box" id="upcoming-task" key={index}>
                                         <div className="task-box-start">
                                             <input
                                                 type="checkbox"
-                                                name="check"
-                                                value={item._id}
+                                                name={item._id}
+                                                checked={checkboxes[item._id] || false}
+                                                onChange={handleCheckboxChange}
                                                 onClick={() => { completedTaks(item._id) }}
                                             />
                                             <h4>🕑</h4>
@@ -257,12 +289,13 @@ const AllTask = () => {
                         {
                             todayTask.length > 0 && todayTask.map((item, index) => (
                                 <>
-                                    <div className="task-box" id="today-task">
+                                    <div className="task-box" id="today-task" key={index}>
                                         <div className="task-box-start">
                                             <input
                                                 type="checkbox"
-                                                name="check"
-                                                value={item._id}
+                                                name={item._id}
+                                                checked={checkboxes[item._id] || false}
+                                                onChange={handleCheckboxChange}
                                                 onClick={() => { completedTaks(item._id) }}
                                             />
                                             <h4>🚀</h4>
@@ -287,7 +320,7 @@ const AllTask = () => {
                         {
                             completedTodayTask.length > 0 && completedTodayTask.map((item, index) => (
                                 <>
-                                    <div className="task-box" id="today-completed-task">
+                                    <div className="task-box" id="today-completed-task" key={index}>
                                         <div className="task-box-start">
                                             <h4>✅</h4>
                                             {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
@@ -314,7 +347,7 @@ const AllTask = () => {
                         {
                             completedTask.length > 0 && completedTask.map((item, index) => (
                                 <>
-                                    <div className="task-box" id="completed-task">
+                                    <div className="task-box" id="completed-task" key={index}>
                                         <div className="task-box-start">
                                             <h4>✅</h4>
                                             {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
@@ -341,12 +374,13 @@ const AllTask = () => {
                         {
                             pendingTask.length > 0 && pendingTask.map((item, index) => (
                                 <>
-                                    <div className="task-box" id="pending-task-box">
+                                    <div className="task-box" id="pending-task-box" key={index}>
                                         <div className="task-box-start">
                                             <input
                                                 type="checkbox"
-                                                name="checkpendin"
-                                                value={item._id}
+                                                name={item._id}
+                                                checked={checkboxes[item._id] || false}
+                                                onChange={handleCheckboxChange}
                                                 onClick={() => { completedTaks(item._id) }}
                                             />
                                             <h4>❌</h4>

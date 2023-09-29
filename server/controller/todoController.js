@@ -2,7 +2,7 @@ const { UserModel, TaskModel } = require("../database/allModels");
 
 exports.addTodo = async (req, res) => {
     try {
-        const { _id } = req.params;
+        const _id = req.session.passport.user._doc._id.toString();
         const { task } = req.body;
         const user = await UserModel.findOne({ _id });
         if (!user) {
@@ -39,7 +39,7 @@ exports.addTodo = async (req, res) => {
 
 exports.getTodo = async (req, res) => {
     try {
-        const { _id } = req.params;
+        const _id = req.session.passport.user._doc._id.toString();
         const { list } = req.query;
         const user = await UserModel.findOne({ _id });
         if (!user) {
