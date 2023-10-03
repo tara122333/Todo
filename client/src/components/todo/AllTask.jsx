@@ -38,7 +38,7 @@ const AllTask = () => {
                 }
             });
             if (response.status === 200) {
-                const task = response?.data?.taskArr;
+                const task = response?.data?.getUserTask.task;
                 const currentYear = currentDateTime?.toString().split(' ')[3];
                 let currentMonth = currentDateTime?.toString().split(' ')[1];
                 const currentDay = currentDateTime?.toString().split(' ')[2];
@@ -179,22 +179,6 @@ const AllTask = () => {
             console.log(error);
         }
     }
-
-    const getAllUserList = async () => {
-        try {
-            const response = await axios.get(`/list/get`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("user")}`
-                }
-            });
-            setListData(response.data.findUserList.list)
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    useEffect(() => {
-        getAllUserList();
-    })
 
     const addTask = () => {
         setType("add")
