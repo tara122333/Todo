@@ -17,11 +17,8 @@ router.get("/google", passport.authenticate("google", {
 
 router.get("/google/callback", passport.authenticate("google", { failureRedirect: "/" }),
     (req, res) => {
-        // return res.redirect(
-        //     `http://localhost:3000/google/${req.session.passport.user.token}`
-        // );
         return res.redirect(
-            `https://todo-tau-liart-43.vercel.app/google/${req.session.passport.user.token}`
+            `http://localhost:3000/google/${req.session.passport.user.token}`
         );
     }
 );
