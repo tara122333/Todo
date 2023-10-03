@@ -12,8 +12,6 @@ const AllTask = () => {
     const [completedTodayTask, setCompletedTodayTask] = useState([]);
     const [pendingTask, setPendingTask] = useState([]);
     const [upcomingTask, setUpcomingTask] = useState([]);
-    const [listData, setListData] = useState("");
-    const [list, setList] = useState("");
     const [type, setType] = useState('');
     const [id, setId] = useState('');
     const navigate = useNavigate();
@@ -223,19 +221,6 @@ const AllTask = () => {
             <div className="container">
                 <div className="container-head">
                     <div className="filter-box">
-                        {/* <label htmlFor="time">Task Filter (Lists)</label>
-                        <select
-                            value={list}
-                            onChange={(e) => { setList(e.target.value); }}
-                            name="list"
-                        >
-                            <option value={""}>All</option>
-                            {
-                                listData && listData?.map((item) => (
-                                    <option value={item}>{item}</option>
-                                ))
-                            }
-                        </select> */}
                     </div>
                     <div className="container-info">
                         <div className="container-time">

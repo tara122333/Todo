@@ -38,7 +38,7 @@ const Signup = () => {
     }
 
     const googleSignUp = async () => {
-        window.location.href = `https://todo-7z9f.onrender.com/auth/google`;
+        window.location.href = `http://localhost:4000/auth/google`;
     }
     return (
         <div className="signup-page">
