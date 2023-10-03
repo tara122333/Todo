@@ -17,7 +17,7 @@ const Login = () => {
     const getUserData = async () => {
         try {
             const user = localStorage.getItem("user");
-            if (user){
+            if (user) {
                 const response = await axios.get(`/user`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("user")}`
@@ -48,9 +48,8 @@ const Login = () => {
             if (userData.email.length > 0 && userData.password.length > 0) {
                 const response = await axios.post(`/auth/signin`, { credentials: userData });
                 if (response.status === 200 && response.data.user.verified) {
-                    localStorage.setItem("user", JSON.stringify({ token: response.data.token }));
-                    localStorage.setItem("_id", response.data.user._id);
-                    navigate(`/home/${response.data.user._id}`);
+                    localStorage.setItem("user", response.data.token);
+                    navigate(`/`);
                 }
                 else {
                     alert("Invalid username or password");
