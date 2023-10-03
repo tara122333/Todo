@@ -2,14 +2,13 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 
 const Google = () => {
-    const { _id, token } = useParams();
+    const { token } = useParams();
 
     const navigate = useNavigate();
 
     const setUserInfo = async () => {
         localStorage.setItem("user", token);
-        localStorage.setItem("_id", _id);
-        navigate(`/home/${_id}`)
+        navigate(`/`)
     }
 
     useEffect(() => {

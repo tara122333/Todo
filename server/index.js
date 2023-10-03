@@ -13,7 +13,7 @@ import session from 'express-session';
 import auth from './router/authRouter';
 import user from './router/userRouter';
 import todo from './router/todoRouter';
-import list from './router/listRouter'
+import list from './router/listRouter';
 
 // import configs
 import googleAuthConfig from "./config/config.goolge"; // google AuthConfig

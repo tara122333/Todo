@@ -16,11 +16,15 @@ const Login = () => {
 
     const getUserData = async () => {
         try {
-            const _id = localStorage.getItem("_id");
-            if (_id) {
-                const response = await axios.get(`/user/${_id}`);
+            const user = localStorage.getItem("user");
+            if (user){
+                const response = await axios.get(`/user`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("user")}`
+                    }
+                });
                 if (response.status === 200) {
-                    navigate(`/home/${_id}`);
+                    navigate(`/`);
                 }
                 else {
                     localStorage.clear();

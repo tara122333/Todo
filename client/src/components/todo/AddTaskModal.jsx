@@ -1,7 +1,5 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-// import Select from 'react-select'
 
 export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = "", setId }) {
     const [list, setList] = useState("");
@@ -14,7 +12,6 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
         list: "default",
         status: false
     })
-    const { _id } = useParams();
 
     const handleTask = (e) => {
         setTask((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -121,7 +118,6 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
                     Authorization: `Bearer ${localStorage.getItem("user")}`
                 }
             });
-            console.log(response);
             if (response.status === 200) {
                 setListToggel(false);
                 setList("");

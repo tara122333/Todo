@@ -18,7 +18,7 @@ router.get("/google", passport.authenticate("google", {
 router.get("/google/callback", passport.authenticate("google", { failureRedirect: "/" }),
     (req, res) => {
         return res.redirect(
-            `http://localhost:3000/google/${req.session.passport.user.user._id}/${req.session.passport.user.token}`
+            `http://localhost:3000/google/${req.session.passport.user.token}`
         );
     }
 );

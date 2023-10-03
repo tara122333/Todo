@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AddTaskModal from "./AddTaskModal";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AllTask = () => {
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -16,13 +16,11 @@ const AllTask = () => {
     const [list, setList] = useState("");
     const [type, setType] = useState('');
     const [id, setId] = useState('');
-
-    const { _id } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
-        const _id = localStorage.getItem("_id");
-        if (!_id) {
+        const token = localStorage.getItem("user");
+        if (!token) {
             navigate('/login');
         }
     })
@@ -41,7 +39,6 @@ const AllTask = () => {
                     Authorization: `Bearer ${localStorage.getItem("user")}`
                 }
             });
-            // console.log(response);
             if (response.status === 200) {
                 const task = response?.data?.taskArr;
                 const currentYear = currentDateTime?.toString().split(' ')[3];
@@ -265,7 +262,6 @@ const AllTask = () => {
                                                 onClick={() => { completedTaks(item._id) }}
                                             />
                                             <h4>🕑</h4>
-                                            {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
                                             <h4 className="task-box-name task-box-text"> {item.name} </h4>
                                         </div>
                                         <div className="task-box-end">
@@ -299,7 +295,6 @@ const AllTask = () => {
                                                 onClick={() => { completedTaks(item._id) }}
                                             />
                                             <h4>🚀</h4>
-                                            {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
                                             <h4 className="task-box-name task-box-text"> {item.name} </h4>
                                         </div>
                                         <div className="task-box-end">
@@ -323,7 +318,6 @@ const AllTask = () => {
                                     <div className="task-box" id="today-completed-task" key={index}>
                                         <div className="task-box-start">
                                             <h4>✅</h4>
-                                            {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
                                             <h4 className="task-box-name task-box-text"> {item.name} </h4>
                                         </div>
                                         <div className="task-box-end">
@@ -350,7 +344,6 @@ const AllTask = () => {
                                     <div className="task-box" id="completed-task" key={index}>
                                         <div className="task-box-start">
                                             <h4>✅</h4>
-                                            {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
                                             <h4 className="task-box-name task-box-text"> {item.name} </h4>
                                         </div>
                                         <div className="task-box-end">
@@ -384,7 +377,6 @@ const AllTask = () => {
                                                 onClick={() => { completedTaks(item._id) }}
                                             />
                                             <h4>❌</h4>
-                                            {/* <h4 className="task-box-index task-box-text">{index + 1}</h4> */}
                                             <h4 className="task-box-name task-box-text"> {item.name} </h4>
                                         </div>
                                         <div className="task-box-end">

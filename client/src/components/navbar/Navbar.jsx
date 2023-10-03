@@ -1,6 +1,6 @@
 const Navbar = (props) => {
 
-    const logout = async() =>{
+    const logout = async () => {
         localStorage.clear();
     }
     return (
@@ -15,7 +15,7 @@ const Navbar = (props) => {
                 <div className="navbar-profile-section">
                     <h3>{props.user}</h3>
                     <p className="log-out-btn"
-                    onClick={logout}
+                        onClick={logout}
                     >Log out</p>
                 </div>
             </div>
