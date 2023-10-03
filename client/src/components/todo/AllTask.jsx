@@ -34,7 +34,7 @@ const AllTask = () => {
 
     const getAllTask = async () => {
         try {
-            const response = await axios(`${process.env.HOME_URL}/todo/get/?list=${list}`, {
+            const response = await axios(`/todo/get/?list=${list}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("user")}`
                 }
@@ -152,7 +152,7 @@ const AllTask = () => {
 
     const deleteTask = async (props) => {
         try {
-            const response = await axios.delete(`${process.env.HOME_URL}/todo/delete/${props}`, {
+            const response = await axios.delete(`/todo/delete/${props}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("user")}`
                 }
@@ -168,7 +168,7 @@ const AllTask = () => {
 
     const completedTaks = async (props) => {
         try {
-            const response = await axios.get(`${process.env.HOME_URL}/todo/completed/task/${props}`, {
+            const response = await axios.get(`/todo/completed/task/${props}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("user")}`
                 }
@@ -184,7 +184,7 @@ const AllTask = () => {
 
     const getAllUserList = async () => {
         try {
-            const response = await axios.get(`${process.env.HOME_URL}/list/get`, {
+            const response = await axios.get(`/list/get`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("user")}`
                 }

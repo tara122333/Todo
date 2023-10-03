@@ -18,7 +18,7 @@ const Signup = () => {
 
     const signup = async () => {
         try {
-            const response = await axios.post(`${process.env.HOME_URL}/auth/signup`, { credentials: userData });
+            const response = await axios.post(`/auth/signup`, { credentials: userData });
             if (response.status === 200) {
                 alert("send a varification mail !! please verify your mail");
                 setUserData({
