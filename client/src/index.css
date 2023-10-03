@@ -117,7 +117,7 @@
   height: 50px;
   justify-content: space-between;
   align-items: center;
-  padding: 3px 150px;
+  padding: 3px 10px;
   box-shadow: 1px 1px 4px #888888;
 }
 
@@ -129,14 +129,14 @@
 }
 
 .navbar-logo-img{
-  width: 35px;
-  height: 30px;
+  width: 25px;
+  height: 20px;
   cursor: pointer;
 }
 
  .navbar-profile-section{
   display: flex;
-  gap: 15px;
+  gap: 10px;
   justify-content: center;
   align-items: center;
 }
@@ -147,6 +147,10 @@
   cursor: pointer;
 } */
 
+.navbar-profile-section h3{
+  font-size: small;
+}
+
 
 .log-out-btn{
   background-color: red;
@@ -154,15 +158,16 @@
   border-radius: 4px;
   color: #fff;
   cursor: pointer;
+  font-size: smaller;
 }
 
 .container{
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  padding: 4px 40px;
-  margin-top: 25px;
+  gap: 10px;
+  padding: 4px 10px;
+  margin-top: 10px;
 }
 
 .container-head{
@@ -170,13 +175,13 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 2px 18px;
-  gap: 20px;
+  padding: 2px 5px;
+  gap: 5px;
 }
 
 .container-time{
   display: flex;
-  gap: 15px;
+  gap: 8px;
   justify-content: center;
   align-items: center;
   color: rgb(100, 95, 95);
@@ -205,7 +210,7 @@
 }
 .btn{
   background-color: rgb(28, 196, 28);
-  padding: 4px 16px;
+  padding: 4px 8px;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -225,7 +230,7 @@
 }
 
 .modal-container{
-  width: 500px;
+  width: 400px;
   background-color: #fff;
   opacity: 1;
   z-index: 50;
@@ -233,18 +238,17 @@
   border: 1px solid blue;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
 }
 
 .add-list-box{
   display: flex;
-  gap: 25px;
+  gap: 5px;
   width: 100%;
   justify-content: space-between;
 }
 
 .add-list-box select{
-  width: 360px;
+  width: 280px;
   outline: none;
 }
 
@@ -281,14 +285,14 @@
 .todo-section{
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 5px;
 }
 .todo-box{
   /* border: 2px solid blue; */
-  padding: 4px 15px;
+  padding: 4px 5px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 }
 
 .todo-box-heading{
@@ -299,21 +303,26 @@
 
 .task-box{
   display: flex;
-  padding: 4px 12px;
+  width: 100%;
+  flex-direction: column-reverse;
+  padding: 4px 5px;
   border: 1px solid rgb(169, 168, 168);
   border-radius: 4px;
   justify-content: space-between;
-  align-items: center;
 }
 
 .task-box-start{
   display: flex;
-  gap: 25px;
+  gap: 15px;
+  border-top: 1px solid gray;
+  padding: 0px;
+  margin-top: 3px;
 }
 
 .task-box-end{
   display: flex;
   gap: 30px;
+  justify-content: space-between;
 }
 
 .task-box-info{
@@ -368,4 +377,73 @@
 }
 #pending-task-box{
   border:1px solid red;
+}
+
+
+
+@media only screen and (min-width: 600px) {
+  .navbar{
+    padding: 3px 150px;
+  }
+  .navbar-logo-img{
+    width: 35px;
+    height: 30px;
+  }
+  .navbar-profile-section{
+    gap: 15px;
+  }
+  .navbar-profile-section h3{
+    font-size: medium;
+  }
+  .log-out-btn{
+    font-size: medium;
+  }
+  .container{
+    gap: 15px;
+    padding: 4px 40px;
+    margin-top: 25px;
+  }
+  .container-head{
+    padding: 2px 18px;
+    gap: 20px;
+  }
+  .container-time{
+    gap: 15px;
+  }
+  .btn{
+    padding: 4px 16px;
+  }
+  .modal-container{
+    width: 500px;
+  }
+  .add-list-box{
+    gap: 25px;
+  }
+  .add-list-box select{
+    width: 360px;
+  }
+  .todo-section{
+    gap: 25px;
+  }
+  .todo-box{
+    padding: 4px 15px;
+    gap: 10px;
+  }
+  .task-box{
+    display: flex;
+    padding: 4px 12px;
+    border: 1px solid rgb(169, 168, 168);
+    border-radius: 4px;
+    flex-direction: row;
+  }
+  
+.task-box-start{
+  border-top: none;
+}
+  .task-box-end{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+  }
+  
 }

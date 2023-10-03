@@ -58,7 +58,7 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
 
     useEffect(() => {
         getTaskData();
-    }, [id])
+    },[id])
 
     const addTask = async () => {
         try {
