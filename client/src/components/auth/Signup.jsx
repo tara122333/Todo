@@ -18,20 +18,38 @@ const Signup = () => {
 
     const signup = async () => {
         try {
-            const response = await axios.post(`/auth/signup`, { credentials: userData });
-            if (response.status === 200) {
-                alert("send a varification mail !! please verify your mail");
-                setUserData({
-                    fullname: "",
-                    email: "",
-                    password: "",
-                    cpassword: ""
-                })
-                navigate("/login");
+            if (userData.fullname.length <= 0) {
+                alert("Name required");
+            }
+            else if (userData.email.length <= 0) {
+                alert("Email required");
+            }
+            else if (userData.password.length <= 0) {
+                alert("Password required");
+            }
+            else if (userData.cpassword.length <= 0) {
+                alert("Confirm Password required");
+            }
+            else if (userData.cpassword !== userData.password) {
+                alert("Password not match");
             }
             else {
-                alert("Sign up fail!!");
+                const response = await axios.post(`/auth/signup`, { credentials: userData });
+                if (response.status === 200) {
+                    alert("send a varification mail !! please verify your mail");
+                    setUserData({
+                        fullname: "",
+                        email: "",
+                        password: "",
+                        cpassword: ""
+                    })
+                    navigate("/login");
+                }
+                else {
+                    alert("Sign up fail!!");
+                }
             }
+
         } catch (error) {
             console.log(error);
         }

@@ -56,7 +56,7 @@ const Login = () => {
                 }
             }
             else {
-                alert("email and password required");
+                alert("Email and Password required");
             }
 
         } catch (error) {

@@ -64,48 +64,57 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
         try {
             if (type === "add") {
                 setId("54");
-                const response = await axios.post(`/todo/add`, { task }, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("user")}`
+                if (task.name.length <= 0) {
+                    alert("Task name is required!!");
+                }
+                else {
+                    const response = await axios.post(`/todo/add`, { task }, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("user")}`
+                        }
+                    });
+                    if (response.status === 200) {
+                        setIsOpen(false);
+                        setTask({
+                            name: "",
+                            date: "",
+                            time: "",
+                            list: "default",
+                        })
+                        setListData("");
+                        setId(" ");
+                        setListToggel(false);
+                        alert("task added success!!");
                     }
-                });
-                if (response.status === 200) {
-                    setIsOpen(false);
-                    setTask({
-                        name: "",
-                        date: "",
-                        time: "",
-                        list: "default",
-                    })
-                    setListData("");
-                    setId(" ");
-                    setListToggel(false);
-                    alert("task added success!!");
                 }
             }
             else if (type === "edit" && id.length > 2) {
-                const response = await axios.put(`/todo/update/task/${id}`, { task }, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("user")}`
+                if (task.name.length <= 0) {
+                    alert("Task name is required!!");
+                }
+                else {
+                    const response = await axios.put(`/todo/update/task/${id}`, { task }, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("user")}`
+                        }
+                    });
+                    if (response.status === 200) {
+                        setIsOpen(false);
+                        setTask({
+                            name: "",
+                            date: "",
+                            time: "",
+                            list: "default",
+                            status: false
+                        })
+                        setId("");
+                        setType("");
+                        setListData("");
+                        setListToggel(false);
+                        alert("task updated success!!");
                     }
-                });
-                if (response.status === 200) {
-                    setIsOpen(false);
-                    setTask({
-                        name: "",
-                        date: "",
-                        time: "",
-                        list: "default",
-                        status: false
-                    })
-                    setId("");
-                    setType("");
-                    setListData("");
-                    setListToggel(false);
-                    alert("task updated success!!");
                 }
             }
-
         } catch (error) {
             console.log(error);
         }
