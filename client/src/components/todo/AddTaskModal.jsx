@@ -50,6 +50,7 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
                         status: response.data.task.status
                     })
                 }
+                setId("");
             }
         } catch (error) {
             console.log(error);
