@@ -7,6 +7,7 @@ const Google = () => {
     const navigate = useNavigate();
 
     const setUserInfo = async () => {
+        localStorage.clear();
         localStorage.setItem("user", token);
         navigate(`/`)
     }

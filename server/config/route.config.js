@@ -1,9 +1,5 @@
 import JwtPassport from "passport-jwt";
 import { UserModel } from "../database/allModels";
-import dotenv from "dotenv";
-// dotenv.config({
-//     path: require("path").resolve(__dirname, "../.env"),
-// });
 
 const JWTStratergy = JwtPassport.Strategy;
 const ExtractJwt = JwtPassport.ExtractJwt;

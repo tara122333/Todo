@@ -16,13 +16,9 @@ import todo from './router/todoRouter';
 import list from './router/listRouter';
 
 // import configs
-import googleAuthConfig from "./config/config.goolge"; // google AuthConfig
+import googleAuthConfig from "./config/config.goolge";
 import routeConfig from './config/route.config';
 
-
-
-// importing microservices route
-// import Auth from './API/auth';
 
 const App = express();
 
