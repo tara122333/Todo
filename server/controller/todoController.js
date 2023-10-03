@@ -40,7 +40,7 @@ exports.addTodo = async (req, res) => {
 exports.getTodo = async (req, res) => {
     try {
         const _id = req.session.passport.user._doc._id.toString();
-        const { list } = req.query;
+        // const { list } = req.query;
         const user = await UserModel.findOne({ _id });
         if (!user) {
             return res.status(203).json({ message: "not found" });
@@ -48,14 +48,12 @@ exports.getTodo = async (req, res) => {
         const getUserTask = await TaskModel.findOne({ user: _id });
         if (getUserTask) {
             const taskArr = [];
-            for (let i = 0; i < getUserTask.task.length; i++) {
-                if (list === getUserTask.task[i].list || list === "") {
-                    taskArr.push(getUserTask.task[i]);
-                }
-            }
+            // for (let i = 0; i < getUserTask.task.length; i++) {
+            //     if (list === getUserTask.task[i].list || list === "") {
+            //         taskArr.push(getUserTask.task[i]);
+            //     }
+            // }
             return res.status(200).json({ message: "all task", taskArr });
-
-
         }
         return res.status(201).json({ message: "task not found" });
 

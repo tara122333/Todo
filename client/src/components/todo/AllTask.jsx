@@ -34,7 +34,7 @@ const AllTask = () => {
 
     const getAllTask = async () => {
         try {
-            const response = await axios(`/todo/get/?list=${list}`, {
+            const response = await axios(`/todo/get`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("user")}`
                 }
@@ -148,7 +148,7 @@ const AllTask = () => {
 
     useEffect(() => {
         getAllTask();
-    }, [list, id])
+    })
 
     const deleteTask = async (props) => {
         try {
@@ -223,7 +223,7 @@ const AllTask = () => {
             <div className="container">
                 <div className="container-head">
                     <div className="filter-box">
-                        <label htmlFor="time">Task Filter (Lists)</label>
+                        {/* <label htmlFor="time">Task Filter (Lists)</label>
                         <select
                             value={list}
                             onChange={(e) => { setList(e.target.value); }}
@@ -235,7 +235,7 @@ const AllTask = () => {
                                     <option value={item}>{item}</option>
                                 ))
                             }
-                        </select>
+                        </select> */}
                     </div>
                     <div className="container-info">
                         <div className="container-time">
