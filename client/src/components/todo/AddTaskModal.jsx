@@ -19,7 +19,7 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
 
     const getAllUserList = async () => {
         try {
-            const response = await axios.get(`/list/get`, {
+            const response = await axios.get(`${process.env.HOME_URL}/list/get`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("user")}`
                 }
@@ -36,7 +36,7 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
     const getTaskData = async () => {
         try {
             if (type === "edit") {
-                const response = await axios.get(`/todo/get/task/${id}`, {
+                const response = await axios.get(`${process.env.HOME_URL}/todo/get/task/${id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("user")}`
                     }
@@ -64,7 +64,7 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
         try {
             if (type === "add") {
                 setId("54");
-                const response = await axios.post(`/todo/add`, { task }, {
+                const response = await axios.post(`${process.env.HOME_URL}/todo/add`, { task }, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("user")}`
                     }
@@ -84,7 +84,7 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
                 }
             }
             else if (type === "edit" && id.length > 2) {
-                const response = await axios.put(`/todo/update/task/${id}`, { task }, {
+                const response = await axios.put(`${process.env.HOME_URL}/todo/update/task/${id}`, { task }, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("user")}`
                     }
@@ -113,7 +113,7 @@ export default function AddTaskModal({ isOpen, setIsOpen, type, setType, id = ""
 
     const addNewList = async () => {
         try {
-            const response = await axios.post(`/list/add`, { list }, {
+            const response = await axios.post(`${process.env.HOME_URL}/list/add`, { list }, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("user")}`
                 }

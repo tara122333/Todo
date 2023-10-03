@@ -21,7 +21,7 @@ router.get("/google/callback", passport.authenticate("google", { failureRedirect
         //     `http://localhost:3000/google/${req.session.passport.user.token}`
         // );
         return res.redirect(
-            `https://todo-g0h1m2sfg-tara122333.vercel.app/google/${req.session.passport.user.token}`
+            `https://jt-ns0er81st-tara122333.vercel.app/google/${req.session.passport.user.token}`
         );
     }
 );

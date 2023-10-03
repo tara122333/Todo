@@ -18,7 +18,7 @@ const Home = () => {
     })
     const getUserData = async () => {
         try {
-            const response = await axios.get(`/user`, {
+            const response = await axios.get(`${process.env.HOME_URL}/user`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("user")}`
                 }

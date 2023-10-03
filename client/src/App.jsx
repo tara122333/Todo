@@ -4,6 +4,7 @@ import Google from "./components/auth/Google";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Home from "./pages/Home";
+require("dotenv").config();
 
 function App() {
   return (
