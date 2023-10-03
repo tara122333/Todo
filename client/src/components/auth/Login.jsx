@@ -40,7 +40,7 @@ const Login = () => {
     })
 
     const googleLogin = async () => {
-        window.location.href = `http://localhost:4000/auth/google`;
+        window.location.href = `https://todo-7z9f.onrender.com/auth/google`;
     }
     const login = async (e) => {
         try {

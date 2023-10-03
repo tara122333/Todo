@@ -4,22 +4,8 @@ import Google from "./components/auth/Google";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Home from "./pages/Home";
-import { useEffect } from "react";
 
 function App() {
-
-  const navigate = useNavigate();
-
-  const getUserToken = async () => {
-    const user = localStorage.getItem("user");
-    if (!user) {
-      navigate("/login")
-    }
-  }
-  useEffect(() => {
-    getUserToken()
-  })
-
   return (
     <>
       <HomeHoc path="/" exect component={Home} />
